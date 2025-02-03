@@ -1,6 +1,6 @@
 import express from "express";
 import {Crop} from "../model/Crop";
-import {getAllCrops, saveCrop} from "../database/Crop-data";
+import {deleteCrop, getAllCrops, getSelctedCrop, saveCrop, updateCrop} from "../database/Crop-data";
 
 
 const router = express.Router();
@@ -27,4 +27,37 @@ router.get('/', async (req: express.Request, res: express.Response) => {
     }
 })
 
+router.get('/:id', async (req: express.Request, res: express.Response) => {
+    const id = req.params.id;
+
+    try{
+        const getCrop = await getSelctedCrop(id);
+        res.json(getCrop);
+    }catch(err){
+        console.log("error getCrop",err);
+        res.status(400).send({})
+    }
+})
+
+router.put('/update/:id', async (req: express.Request, res: express.Response) => {
+    const crop:Crop = req.body;
+
+    try {
+        const isUpdateCrop = await updateCrop(crop);
+        res.send(isUpdateCrop + "Update Successfully");
+    }catch (err){
+        res.status(400).send({})
+    }
+})
+
+router.delete('/delete/:id', async (req: express.Request, res: express.Response) => {
+    const id = req.params.id;
+    try {
+        const isDeleteCrop = await deleteCrop(id);
+        res.send(isDeleteCrop + "Delete Successfully");
+    }catch (err){
+        res.status(400).send({})
+        // return("Deleting not Successfully");
+    }
+})
 export default router;
