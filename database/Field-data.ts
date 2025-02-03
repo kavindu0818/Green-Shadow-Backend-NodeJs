@@ -42,3 +42,33 @@ export async function getAllField() {
         return null;
     }
 }
+
+export async function deleteField(field: string) {
+    try {
+        return await prisma.field.delete({
+            where:{
+                fieldCode: field
+            }
+        })
+    }catch (err){
+        console.error("Error deleting field", err);
+        return ("Not deleted field");
+    }
+}
+
+export async function updateField(f: Field){
+    try {
+        return await prisma.field.update({
+           where:{fieldCode:f.fieldCode},
+            data:{
+                fieldCode: f.fieldCode,
+                fieldName: f.fieldName,
+                fieldLocation: f.fieldLocation,
+                fieldSize: f.fieldSize,
+                fieldImage: f.fieldImage || '',
+            }
+        })
+    }catch (err){
+        return ("Not updated field");
+    }
+}

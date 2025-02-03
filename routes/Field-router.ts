@@ -1,6 +1,6 @@
 import express from "express";
 import {Field} from "../model/Field";
-import {FieldAdd, getAllField, getSelectedField} from "../database/Field-data";
+import {deleteField, FieldAdd, getAllField, getSelectedField, updateField} from "../database/Field-data";
 
 const router = express.Router();
 
@@ -43,4 +43,27 @@ router.get("/", async (req: express.Request, res: express.Response) => {
     }
 })
 
+router.delete("/delete/:fieldCode", async (req: express.Request, res: express.Response) => {
+    const field = req.params.fieldCode;
+
+    try {
+        const isDeleteField = await deleteField(field);
+        console.log("Field Delete Data", isDeleteField);
+        res.send(isDeleteField);
+    } catch (err) {
+    }
+    res.status(400).send({})
+})
+
+router.put("/update/:fieldCode", async (req: express.Request, res: express.Response) => {
+    const field: Field = req.body;
+    try {
+        const isUpdateField = await updateField(field);
+        console.log("Field Update Data", isUpdateField);
+        res.send(isUpdateField);
+    }catch(err) {
+        console.log("error updating field", err);
+        res.status(400).send({})
+    }
+})
 export default router;
