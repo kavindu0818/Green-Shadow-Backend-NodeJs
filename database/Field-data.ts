@@ -6,23 +6,13 @@ const prisma = new PrismaClient();
 
 export async function FieldAdd(f: Field) {
     try {
-        // If the image is a file, convert it to a Base64 string
-        let fieldImage: string = '';
-
-        if (f.fieldImage) {
-            // If the image exists, convert it to a Base64 string
-            const buffer = await f.fieldImage.arrayBuffer();
-            fieldImage = `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`;
-        }
-
-        // Handle null fieldImage case (if no image is provided, assign an empty string or default value)
         const newField = await prisma.field.create({
             data: {
                 fieldCode: f.fieldCode,
                 fieldName: f.fieldName,
                 fieldLocation: f.fieldLocation,
                 fieldSize: f.fieldSize,
-                fieldImage: fieldImage || '',  // Use an empty string if no image
+                fieldImage: f.fieldImage || '',  // Use an empty string if no image
             }
         });
 
@@ -30,5 +20,25 @@ export async function FieldAdd(f: Field) {
         return newField;
     } catch (err) {
         console.log("Error adding field", err);
+    }
+}
+
+export async function getSelectedField(field: string) {
+    try {
+        return await prisma.field.findUnique({
+            where: { fieldCode: field }, // Ensure "code" is the correct column name
+        });
+    } catch (err) {
+        console.error("Error getting field from database:", err);
+        return null;
+    }
+}
+
+export async function getAllField() {
+    try {
+        return await prisma.field.findMany();
+    } catch (err) {
+        console.error("Error getting field from database:", err);
+        return null;
     }
 }

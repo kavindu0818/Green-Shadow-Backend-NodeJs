@@ -3,7 +3,7 @@ export class Field{
     fieldName: string;
     fieldLocation: string;
     fieldSize: string;
-    fieldImage: File | null;
+    fieldImage: string | null;
 
 
     constructor(
@@ -11,7 +11,7 @@ export class Field{
         fieldName: string,
         fieldLocation: string,
         fieldSize: string,
-        fieldImage: File | null,
+        fieldImage:string| null,
 
     ) {
         this.fieldCode = fieldCode;

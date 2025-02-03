@@ -1,6 +1,6 @@
 import express from "express";
 import {Field} from "../model/Field";
-import {FieldAdd} from "../database/Field-data";
+import {FieldAdd, getAllField, getSelectedField} from "../database/Field-data";
 
 const router = express.Router();
 
@@ -12,6 +12,33 @@ router.post("/add", (req: express.Request, res: express.Response) => {
         res.send(addField);
     }catch(err) {
         console.log("error adding Field",err);
+        res.status(400).send({})
+    }
+})
+
+router.get("/:fieldCode", async (req: express.Request, res: express.Response) => {
+    const field = req.params.fieldCode;
+
+    try {
+        const fieldData = await getSelectedField(field);
+        console.log("Field Data", fieldData);
+        res.json(fieldData);
+
+
+    } catch (err) {
+        console.log("error getField", err);
+        res.status(400).send({})
+    }
+})
+
+router.get("/", async (req: express.Request, res: express.Response) => {
+
+    try {
+        const fieldAllData = await getAllField();
+        console.log("Field All Data", fieldAllData);
+        res.json(fieldAllData);
+    }catch(err) {
+        console.log("error getAllField", err);
         res.status(400).send({})
     }
 })
