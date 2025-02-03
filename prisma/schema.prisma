@@ -19,4 +19,16 @@ model Field {
   fieldLocation String
   fieldSize     String
   fieldImage    String
+  crops         Crop[]
+}
+
+model Crop {
+  cropCode           String @id
+  cropCommonName     String
+  cropScientificName String
+  cropCategory       String
+  cropSeason         String
+  cropImage          String
+  fieldCode          String // Foreign key reference
+  field              Field  @relation(fields: [fieldCode], references: [fieldCode])
 }
