@@ -42,3 +42,66 @@ export async function getAllStaffs() {
         return ("Not Staff")
     }
 }
+
+export async function getSelectedStaff(staffCode:string) {
+    try {
+        return await prisma.staff.findUnique({
+            where:{
+                staffCode:staffCode
+            }
+        })
+    }catch(err) {
+        console.error("Error getting staff:", err);
+        return ("not Selected staff");
+    }
+}
+
+export async function deleteStaff(staffCode:string) {
+    try {
+        return await prisma.staff.delete({
+            where:{
+                staffCode:staffCode
+            }
+        })
+    }catch(err) {
+        console.error("Error deleting staff:", err);
+        return ("Delete Not Succsfully Staff");
+    }
+}
+
+export async function updateStaff(staffCode: string, staff: Staff) {
+    try {
+
+        const existingStaff = await prisma.staff.findUnique({
+            where: { staffCode }
+        });
+
+        if (!existingStaff) {
+            console.error(`Staff with code ${staffCode} not found`);
+            return null;
+        }
+
+
+        return await prisma.staff.update({
+            where: { staffCode },
+            data: {
+                firstName: staff.firstName,
+                lastName: staff.lastName,
+                designation: staff.designation,
+                gender: staff.gender,
+                dob: new Date(staff.dob),
+                address_one: staff.address_one,
+                address_two: staff.address_two || null,
+                address_three: staff.address_three || null,
+                contact: staff.contact,
+                email: staff.email,
+                role: staff.role,
+                join_date: new Date(staff.join_date),
+                fieldCode: staff.fieldCode
+            }
+        });
+    } catch (err) {
+        console.error("Error updating staff:", err);
+        return null;
+    }
+}
