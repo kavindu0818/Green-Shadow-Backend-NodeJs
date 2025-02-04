@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,13 +8,14 @@ datasource db {
 }
 
 model Field {
-  fieldCode     String  @id
+  fieldCode     String      @id
   fieldName     String
   fieldLocation String
   fieldSize     String
   fieldImage    String
   crops         Crop[]
   staff         Staff[]
+  equipment     Equipment[]
 }
 
 model Crop {
@@ -30,12 +25,12 @@ model Crop {
   cropCategory       String
   cropSeason         String
   cropImage          String
-  fieldCode          String // Foreign key reference
+  fieldCode          String
   field              Field  @relation(fields: [fieldCode], references: [fieldCode])
 }
 
 model Staff {
-  staffCode     String   @id // Primary Key
+  staffCode     String      @id
   firstName     String
   lastName      String
   designation   String
@@ -46,8 +41,20 @@ model Staff {
   address_three String?
   contact       String
   email         String
-  role          String // Foreign key reference
+  role          String
   join_date     DateTime
   fieldCode     String
-  field         Field    @relation(fields: [fieldCode], references: [fieldCode])
+  field         Field       @relation(fields: [fieldCode], references: [fieldCode])
+  equipment     Equipment[]
+}
+
+model Equipment {
+  equipCode   String @id
+  equipName   String
+  equipType   String
+  equipStatus String
+  staffCode   String
+  fieldCode   String
+  field       Field  @relation(fields: [fieldCode], references: [fieldCode])
+  staff       Staff  @relation(fields: [staffCode], references: [staffCode])
 }
