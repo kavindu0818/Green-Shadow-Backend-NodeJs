@@ -14,12 +14,13 @@ datasource db {
 }
 
 model Field {
-  fieldCode     String @id
+  fieldCode     String  @id
   fieldName     String
   fieldLocation String
   fieldSize     String
   fieldImage    String
   crops         Crop[]
+  staff         Staff[]
 }
 
 model Crop {
@@ -31,4 +32,22 @@ model Crop {
   cropImage          String
   fieldCode          String // Foreign key reference
   field              Field  @relation(fields: [fieldCode], references: [fieldCode])
+}
+
+model Staff {
+  staffCode     String   @id // Primary Key
+  firstName     String
+  lastName      String
+  designation   String
+  gender        String
+  dob           DateTime
+  address_one   String
+  address_two   String?
+  address_three String?
+  contact       String
+  email         String
+  role          String // Foreign key reference
+  join_date     DateTime
+  fieldCode     String
+  field         Field    @relation(fields: [fieldCode], references: [fieldCode])
 }

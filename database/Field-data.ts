@@ -39,7 +39,7 @@ export async function getAllField() {
         return await prisma.field.findMany();
     } catch (err) {
         console.error("Error getting field from database:", err);
-        return null;
+        return ("not Field");
     }
 }
 
