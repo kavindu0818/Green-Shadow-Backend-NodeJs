@@ -58,3 +58,13 @@ model Equipment {
   field       Field  @relation(fields: [fieldCode], references: [fieldCode])
   staff       Staff  @relation(fields: [staffCode], references: [staffCode])
 }
+
+model Vehicle {
+  vehicleCode        String @id
+  licensePlateNumber String @unique
+  vehicleCategory    String
+  fuelType           String
+  status             String
+  staffMemberDetails String
+  remark             String
+}
