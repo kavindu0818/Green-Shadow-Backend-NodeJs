@@ -7,12 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  phoneNumber String @id
+  userName    String
+  password    String
+  role        String
+}
+
 model Field {
   fieldCode     String      @id
   fieldName     String
   fieldLocation String
   fieldSize     String
-  fieldImage    String
+  fieldImage    String      @db.LongText
   crops         Crop[]
   staff         Staff[]
   equipment     Equipment[]
@@ -24,7 +31,7 @@ model Crop {
   cropScientificName String
   cropCategory       String
   cropSeason         String
-  cropImage          String
+  cropImage          String @db.LongText
   fieldCode          String
   field              Field  @relation(fields: [fieldCode], references: [fieldCode])
 }
@@ -35,14 +42,14 @@ model Staff {
   lastName      String
   designation   String
   gender        String
-  dob           DateTime
+  dob           String
   address_one   String
   address_two   String?
   address_three String?
   contact       String
   email         String
   role          String
-  join_date     DateTime
+  join_date     String
   fieldCode     String
   field         Field       @relation(fields: [fieldCode], references: [fieldCode])
   equipment     Equipment[]

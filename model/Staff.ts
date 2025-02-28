@@ -11,7 +11,7 @@ export class Staff{
     contact: string;
     email: string;
     role: string;
-    join_date:string
+    join_date: string;
     fieldCode: string;
 
     constructor(staffCode: string, firstName: string, lastName: string, designation: string, gender: string, dob:string, address_one: string, address_two: string, address_three: string, contact: string, email: string, role: string,join_date:string,fieldCode:string) {

@@ -8,6 +8,8 @@ const router = express.Router();
 router.post("/add", async (req: express.Request, res: express.Response) => {
     const newCrop:Crop = req.body;
 
+    console.log(newCrop);
+
     try {
         const isSaveCrop = await saveCrop(newCrop);
         res.send(isSaveCrop);

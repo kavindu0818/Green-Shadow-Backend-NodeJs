@@ -1,5 +1,4 @@
 import {PrismaClient, Vehicle} from "@prisma/client";
-import {Crop} from "../model/Crop";
 
 const prisma = new PrismaClient();
 

@@ -46,13 +46,16 @@ router.get("/", async (req: express.Request, res: express.Response) => {
 router.delete("/delete/:fieldCode", async (req: express.Request, res: express.Response) => {
     const field = req.params.fieldCode;
 
+    console.log("Iam field Delete")
+
     try {
         const isDeleteField = await deleteField(field);
         console.log("Field Delete Data", isDeleteField);
         res.send(isDeleteField);
     } catch (err) {
+        res.status(400).send({err})
     }
-    res.status(400).send({})
+
 })
 
 router.put("/update/:fieldCode", async (req: express.Request, res: express.Response) => {

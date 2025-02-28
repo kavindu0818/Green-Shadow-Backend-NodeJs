@@ -89,14 +89,14 @@ export async function updateStaff(staffCode: string, staff: Staff) {
                 lastName: staff.lastName,
                 designation: staff.designation,
                 gender: staff.gender,
-                dob: new Date(staff.dob),
+                dob: staff.dob,
                 address_one: staff.address_one,
                 address_two: staff.address_two || null,
                 address_three: staff.address_three || null,
                 contact: staff.contact,
                 email: staff.email,
                 role: staff.role,
-                join_date: new Date(staff.join_date),
+                join_date: staff.join_date,
                 fieldCode: staff.fieldCode
             }
         });
