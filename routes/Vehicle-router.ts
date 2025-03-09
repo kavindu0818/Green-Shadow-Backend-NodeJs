@@ -1,10 +1,9 @@
 import express  from "express";
 import {Equipment, Vehicle} from "@prisma/client";
 import {deleteVehicle, getAllVehicles, getSelctedVehicle, saveVehicle, updateVehicle} from "../database/Vehicle-data";
-import {deleteEquipment, getAllEquipments, getSelctedEquipmet, updateEquipment} from "../database/Equipment-data";
-
-
+import dotenv from "dotenv";
 const router = express.Router();
+dotenv.config();
 
 router.post("/add", async (req: express.Request, res: express.Response) => {
     const vehicle: Vehicle = req.body;
@@ -50,14 +49,13 @@ router.delete('/delete/:id', async (req: express.Request, res: express.Response)
 })
 
 router.put('/update/:id', async (req: express.Request, res: express.Response) => {
-    const vehicle:Vehicle = req.body;
+    const vehicle: Vehicle = req.body;
 
     try {
         const isUpdateVehicle = await updateVehicle(vehicle);
         res.send(isUpdateVehicle + "Update Successfully");
-    }catch (err){
+    } catch (err) {
         res.status(400).send({})
     }
 })
-
 export default router;
